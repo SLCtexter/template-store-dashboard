@@ -1,0 +1,517 @@
+.ts-dashboard {
+  max-width: 1400px;
+  margin: 0 auto;
+  background: #f8f9fa;
+  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.ts-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 30px;
+  border-radius: 15px;
+  margin: 20px;
+  color: white;
+  text-align: center;
+}
+.ts-header h1 {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 700;
+}
+.ts-header p {
+  margin: 8px 0 0 0;
+  font-size: 16px;
+  opacity: 0.9;
+}
+
+.ts-categories {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: 20px;
+  flex-wrap: wrap;
+}
+.ts-cat-btn {
+  background: white;
+  border: 2px solid #e0e0e0;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 14px;
+}
+.ts-cat-btn.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-color: #667eea;
+}
+.ts-cat-btn:hover:not(.active) {
+  transform: translateY(-2px);
+  border-color: #667eea;
+}
+
+.ts-content {
+  padding: 20px;
+}
+.ts-templates-area h3 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: #333;
+}
+
+.ts-templates-area {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.ts-template-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 30px;
+  justify-items: stretch;
+}
+.ts-template-card {
+  background: white;
+  border-radius: 12px;
+  padding: 12px;
+  transition: all 0.3s;
+  border: 1px solid #e8eaf6;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  text-align: center;
+  width: 100%;
+}
+.ts-template-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+.ts-template-card.selected {
+  border: 2px solid #667eea;
+  background: #f8f5ff;
+}
+
+/* Preview image */
+.ts-preview-img {
+  width: 100%;
+  height: 160px;
+  background: #f0f2f5;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ts-preview-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
+}
+.ts-preview-img.full-preview {
+  height: 160px;
+  overflow-y: auto;
+  display: block;
+}
+.ts-preview-img.full-preview img {
+  height: auto;
+  object-fit: contain;
+}
+
+.ts-template-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: #333;
+  margin: 10px 0 5px;
+}
+.ts-template-price {
+  font-size: 16px;
+  color: #10b981;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.ts-view-template-btn,
+.ts-proceed-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  width: 100%;
+  margin-top: 8px;
+  font-size: 14px;
+}
+.ts-view-template-btn:hover,
+.ts-proceed-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+.ts-proceed-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Checkout Page Styles */
+.ts-checkout-container {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #f8f9fa;
+  min-height: 100vh;
+}
+.ts-checkout-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 20px 30px;
+  border-radius: 15px;
+  margin-bottom: 30px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+.ts-checkout-header h1 {
+  margin: 0;
+  color: #333;
+}
+.ts-checkout-header button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.ts-checkout-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+.ts-checkout-preview,
+.ts-checkout-features,
+.ts-checkout-summary {
+  flex: 1;
+  min-width: 280px;
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+.ts-preview-box {
+  text-align: center;
+}
+.ts-preview-box p {
+  margin-top: 10px;
+  font-weight: 600;
+}
+.ts-features-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 15px;
+}
+.ts-feature-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ts-order-summary {
+  background: #fef9c3;
+  border-radius: 12px;
+  padding: 20px;
+}
+.ts-order-row {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+  font-size: 16px;
+}
+.ts-buy-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 14px 20px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 20px;
+}
+.ts-buy-btn:disabled {
+  opacity: 0.6;
+}
+.ts-back-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.ts-back-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+.ts-checkout-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.ts-footer {
+  text-align: center;
+  padding: 20px;
+  color: #888;
+  margin-top: 30px;
+  border-top: 1px solid #e0e0e0;
+}
+.ts-loading {
+  text-align: center;
+  padding: 50px;
+  font-size: 18px;
+}
+
+/* Full image modal */
+.ts-full-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90vw;
+  max-width: 500px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  z-index: 9999;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.ts-full-modal-content {
+  flex: 1;
+  overflow-y: auto;
+  height: 500px;
+  padding: 16px;
+  text-align: center;
+}
+.ts-full-modal-content img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.ts-full-modal::after {
+  content: "✕";
+  position: sticky;
+  top: 10px;
+  left: 100%;
+  margin-left: -40px;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  pointer-events: auto;
+  z-index: 10000;
+  font-size: 18px;
+}
+.ts-full-modal::after:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+@media (max-width: 1024px) {
+  .ts-template-grid {
+    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  }
+  .ts-checkout-content {
+    gap: 20px;
+  }
+}
+
+/* Large Mobile*/
+@media (max-width: 768px) {
+  .ts-header {
+    padding: 20px;
+    margin: 15px;
+  }
+  .ts-header h1 {
+    font-size: 26px;
+  }
+  .ts-header p {
+    font-size: 14px;
+  }
+  .ts-categories {
+    gap: 0.8rem;
+    margin: 15px;
+  }
+  .ts-cat-btn {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+  .ts-content {
+    padding: 15px;
+  }
+  .ts-templates-area h3 {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+  .ts-template-grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+  }
+  .ts-template-card {
+    padding: 10px;
+  }
+  .ts-template-name {
+    font-size: 16px;
+  }
+  .ts-template-price {
+    font-size: 14px;
+  }
+  .ts-view-template-btn,
+  .ts-proceed-btn {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+  /* Checkout page */
+  .ts-checkout-container {
+    margin: 20px auto;
+    padding: 15px;
+  }
+  .ts-checkout-header {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+    padding: 15px 20px;
+  }
+  .ts-checkout-header button {
+    width: 100%;
+    max-width: 200px;
+  }
+  .ts-checkout-content {
+    flex-direction: column;
+    gap: 20px;
+  }
+  .ts-checkout-preview,
+  .ts-checkout-features,
+  .ts-checkout-summary {
+    min-width: auto;
+    width: 100%;
+  }
+  .ts-preview-box div[style*="height: 400px"] {
+    height: 300px !important;
+  }
+  .ts-features-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .ts-order-row {
+    font-size: 14px;
+  }
+  .ts-buy-btn {
+    font-size: 14px;
+    padding: 12px;
+  }
+  /* Modal */
+  .ts-full-modal {
+    width: 95vw;
+    max-width: 400px;
+  }
+  .ts-full-modal-content {
+    height: 400px;
+  }
+}
+
+/* Mobile*/
+@media (max-width: 640px) {
+  .ts-header h1 {
+    font-size: 22px;
+  }
+  .ts-categories {
+    gap: 0.5rem;
+    margin: 10px;
+  }
+  .ts-cat-btn {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+  .ts-template-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .ts-footer {
+    font-size: 12px;
+    padding: 12px;
+  }
+  .ts-checkout-preview h3,
+  .ts-checkout-features h3,
+  .ts-checkout-summary h3 {
+    font-size: 18px;
+  }
+  .ts-full-modal-content {
+    height: 350px;
+  }
+}
+
+/* Small Mobile*/
+@media (max-width: 480px) {
+  .ts-header {
+    padding: 15px;
+    margin: 10px;
+  }
+  .ts-header h1 {
+    font-size: 20px;
+  }
+  .ts-header p {
+    font-size: 12px;
+  }
+  .ts-cat-btn {
+    padding: 5px 10px;
+    font-size: 11px;
+  }
+  .ts-templates-area h3 {
+    font-size: 18px;
+  }
+  .ts-template-card {
+    padding: 8px;
+  }
+  .ts-template-name {
+    font-size: 14px;
+  }
+  .ts-view-template-btn,
+  .ts-proceed-btn {
+    font-size: 12px;
+    padding: 6px 8px;
+  }
+  .ts-checkout-header h1 {
+    font-size: 24px;
+  }
+  .ts-checkout-header button {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+  .ts-order-row {
+    font-size: 13px;
+  }
+  .ts-buy-btn {
+    font-size: 13px;
+  }
+  .ts-full-modal-content {
+    height: 300px;
+    padding: 12px;
+  }
+}

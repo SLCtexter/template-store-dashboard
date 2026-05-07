@@ -1,0 +1,459 @@
+/* Table Management Styles */
+.table-management-container {
+  background-color: #f8f9fa;
+  min-height: 100vh;
+  padding: 30px 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.tm-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 30px;
+  border-radius: 15px;
+  margin-bottom: 30px;
+  color: white;
+  text-align: center;
+}
+
+.tm-header h1 {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.tm-header p {
+  margin: 8px 0 0 0;
+  font-size: 16px;
+  opacity: 0.9;
+}
+
+.tm-section {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  margin-bottom: 30px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+}
+
+.tm-section h2 {
+  margin: 0 0 20px 0;
+  font-size: 22px;
+  font-weight: 700;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Add Table Form */
+.add-table-form {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  align-items: end;
+}
+
+.tm-input {
+  padding: 12px 15px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.3s;
+  flex: 1;
+  min-width: 200px;
+}
+
+.tm-input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.tm-btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  white-space: nowrap;
+}
+
+.tm-btn-primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.tm-btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Tables Grid */
+.tm-tables-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 30px;
+}
+
+.tm-table-card {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  border-radius: 12px;
+  padding: 25px;
+  transition: all 0.3s;
+  border: 2px solid #e8eaf6;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.tm-table-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.tm-table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.tm-table-header h3 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: #333;
+}
+
+.tm-btn-delete {
+  background: #ff4757;
+  color: white;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s;
+}
+
+.tm-btn-delete:hover {
+  transform: scale(1.1);
+  background: #ff3838;
+}
+
+.tm-capacity {
+  margin: 0 0 15px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #666;
+  background: rgba(255, 255, 255, 0.6);
+  padding: 10px 15px;
+  border-radius: 6px;
+  display: inline-block;
+}
+
+/* Visual Seats Grid - Circular Layout */
+.tm-seats-grid {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  margin: 30px auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Center table display */
+.tm-seats-grid::before {
+  content: "🍽️ " attr(data-table-name);
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  z-index: 10;
+}
+
+.tm-seat {
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  border: 2px solid #e0e0e0;
+  text-align: center;
+}
+
+/* Position seats in circle - dynamic via inline styles */
+/* See TableManagement.jsx for angle calculation */
+
+.tm-seat.occupied {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: 2px solid #667eea;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.tm-seat.occupied:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.5);
+}
+
+.tm-seat.empty {
+  background: white;
+  color: #ccc;
+  border: 2px dashed #ddd;
+}
+
+.tm-seat.empty:hover {
+  border-color: #999;
+}
+
+.tm-seat-occupant {
+  font-size: 12px;
+  font-weight: 700;
+  word-break: break-word;
+}
+
+.tm-seat-empty {
+  font-size: 10px;
+  color: #bbb;
+}
+
+/* Seated Count Section */
+.tm-seated-count {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.7);
+}
+
+.tm-guests-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.tm-guests-summary strong {
+  color: #333;
+  font-weight: 700;
+}
+
+.tm-guest-item {
+  background: white;
+  padding: 6px 10px;
+  border-radius: 4px;
+  color: #666;
+  font-size: 12px;
+  display: inline-block;
+  width: fit-content;
+}
+
+.tm-guest-item::before {
+  content: "👤 ";
+}
+
+.tm-guests-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.tm-guest-badge {
+  background: white;
+  padding: 10px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tm-empty {
+  margin: 0;
+  color: #999;
+  font-size: 13px;
+  font-style: italic;
+  text-align: center;
+  padding: 20px;
+}
+
+/* Unassigned Guests */
+.tm-unassigned-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tm-unassigned-guest {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  transition: all 0.3s;
+}
+
+.tm-unassigned-guest:hover {
+  background: #f0f0f0;
+  border-color: #667eea;
+}
+
+.tm-guest-name {
+  font-weight: 600;
+  color: #333;
+  flex: 1;
+}
+
+.tm-assign-controls {
+  display: flex;
+  gap: 10px;
+}
+
+.tm-select {
+  padding: 10px 12px;
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.3s;
+  background: white;
+}
+
+.tm-select:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.tm-all-assigned {
+  text-align: center;
+  color: #10b981;
+  font-weight: 600;
+  padding: 30px;
+  margin: 0;
+  font-size: 16px;
+}
+
+.tm-guests-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tm-seated-guests-edit {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.tm-seated-guest-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.7);
+  padding: 8px 12px;
+  border-radius: 6px;
+  gap: 10px;
+}
+
+.tm-guest-info {
+  flex: 1;
+  font-size: 13px;
+  color: #333;
+}
+
+.tm-btn-unassign {
+  background: #ff4757;
+  color: white;
+  border: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.tm-btn-unassign:hover {
+  background: #ff3838;
+  transform: scale(1.1);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .table-management-container {
+    padding: 20px 15px;
+  }
+
+  .tm-header h1 {
+    font-size: 24px;
+  }
+
+  .tm-section {
+    padding: 20px;
+  }
+
+  .add-table-form {
+    flex-direction: column;
+  }
+
+  .tm-input,
+  .tm-btn-primary {
+    width: 100%;
+  }
+
+  .tm-tables-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tm-seats-grid {
+    width: 220px;
+    height: 220px;
+  }
+
+  .tm-seat {
+    width: 50px;
+    height: 50px;
+    font-size: 9px;
+  }
+
+  .tm-unassigned-guest {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .tm-assign-controls {
+    width: 100%;
+  }
+
+  .tm-select {
+    width: 100%;
+  }
+}
