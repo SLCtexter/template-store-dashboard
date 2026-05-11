@@ -61,7 +61,7 @@ const CheckoutPage = () => {
     try {
       const docRef = await addDoc(collection(db, "orders"), orderData);
       const orderId = docRef.id;
-      const apiUrl = 'https://testdashboard.infinityfree.me/api/payhere-hash.php';
+      const apiUrl = '/.netlify/functions/payhere-hash';
       const response = await fetch(apiUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
