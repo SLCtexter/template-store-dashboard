@@ -14,7 +14,6 @@ const TemplateCard = ({ template, isSelected, onSelect, onViewFull, onProceed, c
   };
 
   useEffect(() => {
-    // ✅ startAuto function moved inside useEffect to satisfy ESLint exhaustive-deps
     const startAuto = (container) => {
       stopAuto();
       if (userScrolling.current) return;

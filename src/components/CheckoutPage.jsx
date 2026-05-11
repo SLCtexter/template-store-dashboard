@@ -9,10 +9,9 @@ const CheckoutPage = () => {
   const navigate = useNavigate();
   const { selectedTemplate, selectedFeatures: initialFeatures } = location.state || {};
   const [selectedFeatures, setSelectedFeatures] = useState(initialFeatures || []);
-  const [isProcessing, setIsProcessing] = useState(false);
   const [features, setFeatures] = useState([]);
+  const [processingMethod, setProcessingMethod] = useState(null); // 'payhere' or 'paypal'
 
-  // Fetch additional features from Firestore
   useEffect(() => {
     const fetchFeatures = async () => {
       try {
@@ -45,8 +44,9 @@ const CheckoutPage = () => {
 
   const total = selectedTemplate.price + selectedFeatures.reduce((sum, f) => sum + f.price, 0);
 
-  const handleBuy = async () => {
-    setIsProcessing(true);
+  // ---------- PayHere Payment ----------
+  const handlePayHerePayment = async () => {
+    setProcessingMethod('payhere');
     const orderData = {
       templateId: selectedTemplate.id,
       templateName: selectedTemplate.name,
@@ -55,6 +55,7 @@ const CheckoutPage = () => {
       totalAmount: total,
       currency: "LKR",
       status: "pending",
+      paymentMethod: "payhere",
       createdAt: new Date().toISOString()
     };
     try {
@@ -103,7 +104,44 @@ const CheckoutPage = () => {
     } catch (error) {
       console.error("Payment error:", error);
       alert("Payment initialization failed. Please try again.");
-      setIsProcessing(false);
+      setProcessingMethod(null);
+    }
+  };
+
+  // ---------- PayPal Redirect Payment ----------
+  const handlePayPalPayment = async () => {
+    setProcessingMethod('paypal');
+    const orderData = {
+      templateId: selectedTemplate.id,
+      templateName: selectedTemplate.name,
+      templatePrice: selectedTemplate.price,
+      selectedFeatures: selectedFeatures.map(f => ({ id: f.id, name: f.name, price: f.price })),
+      totalAmount: total,
+      currency: "USD", // use USD for sandbox
+      status: "pending",
+      paymentMethod: "paypal",
+      createdAt: new Date().toISOString()
+    };
+    try {
+      const docRef = await addDoc(collection(db, "orders"), orderData);
+      const orderId = docRef.id;
+      // Call Netlify function to create PayPal order
+      const res = await fetch('/.netlify/functions/create-paypal-order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amount: total, currency: 'USD', orderId })
+      });
+      const data = await res.json();
+      if (data.approval_url) {
+        sessionStorage.setItem('pendingPayPalOrderId', orderId);
+        window.location.href = data.approval_url;
+      } else {
+        throw new Error('No approval URL');
+      }
+    } catch (error) {
+      console.error("PayPal create error:", error);
+      alert("Could not initiate PayPal payment. Please try again.");
+      setProcessingMethod(null);
     }
   };
 
@@ -117,6 +155,7 @@ const CheckoutPage = () => {
       </div>
 
       <div className="ts-checkout-content">
+        {/* Live Preview Section */}
         <div className="ts-checkout-preview">
           <h3>Live Preview (Full Image)</h3>
           <div className="ts-preview-box">
@@ -127,6 +166,7 @@ const CheckoutPage = () => {
           </div>
         </div>
 
+        {/* Additional Features Section */}
         <div className="ts-checkout-features">
           <h3>Additional Features</h3>
           <div className="ts-features-grid">
@@ -143,29 +183,83 @@ const CheckoutPage = () => {
           </div>
         </div>
 
-          <div className="ts-checkout-summary">
-            <div className="ts-order-summary">
-              <div className="ts-order-row">
-                <span>Selected Template</span>
-                <span>LKR {selectedTemplate.price.toFixed(2)}</span>
-              </div>
-              
-              {selectedFeatures.map(feature => (
-                <div key={feature.id} className="ts-order-row">
-                  <span>{feature.name}</span>
-                  <span>+ LKR {feature.price.toFixed(2)}</span>
-                </div>
-              ))}
-              
-              <div className="ts-order-row" style={{ fontWeight: 'bold', borderTop: '1px solid #ca8a04', marginTop: '8px', paddingTop: '8px' }}>
-                <span>Total</span>
-                <span>LKR {total.toFixed(2)}</span>
-              </div>
+        {/* Payment Section */}
+        <div className="ts-checkout-summary">
+          <div className="ts-order-summary">
+            <div className="ts-order-row">
+              <span>Selected Template</span>
+              <span>LKR {selectedTemplate.price.toFixed(2)}</span>
             </div>
-            <button className="ts-buy-btn" onClick={handleBuy} disabled={isProcessing}>
-              {isProcessing ? 'Processing...' : 'Buy Now'}
-            </button>
+            {selectedFeatures.map(feature => (
+              <div key={feature.id} className="ts-order-row">
+                <span>{feature.name}</span>
+                <span>+ LKR {feature.price.toFixed(2)}</span>
+              </div>
+            ))}
+            <div className="ts-order-row" style={{ fontWeight: 'bold', borderTop: '1px solid #ca8a04', marginTop: '8px', paddingTop: '8px' }}>
+              <span>Total</span>
+              <span>LKR {total.toFixed(2)}</span>
+            </div>
           </div>
+
+          {/* Payment Method Buttons (Direct Payment on Click) */}
+          <div style={{ marginTop: '20px' }}>
+            <label style={{ fontWeight: 'bold', display: 'block', marginBottom: '12px', fontSize: '16px' }}>
+              Pay with
+            </label>
+            <div style={{ display: 'flex', gap: '16px', justifyContent: 'center' }}>
+              {/* PayHere Button */}
+              <button
+                disabled={processingMethod !== null}
+                style={{
+                  flex: 1,
+                  padding: '12px',
+                  background: processingMethod === 'payhere' ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' : 'white',
+                  color: processingMethod === 'payhere' ? 'white' : '#333',
+                  border: processingMethod === 'payhere' ? 'none' : '2px solid #e2e8f0',
+                  borderRadius: '12px',
+                  fontWeight: '600',
+                  cursor: processingMethod ? 'not-allowed' : 'pointer',
+                  transition: 'all 0.2s'
+                }}
+                onMouseEnter={(e) => {
+                  if (!processingMethod) e.currentTarget.style.borderColor = '#667eea';
+                }}
+                onMouseLeave={(e) => {
+                  if (!processingMethod) e.currentTarget.style.borderColor = '#e2e8f0';
+                }}
+                onClick={handlePayHerePayment}
+              >
+                {processingMethod === 'payhere' ? 'Processing...' : 'PayHere'}
+              </button>
+
+              {/* PayPal Button */}
+              <button
+                disabled={processingMethod !== null}
+                style={{
+                  flex: 1,
+                  padding: '12px',
+                  background: processingMethod === 'paypal' ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' : 'white',
+                  color: processingMethod === 'paypal' ? 'white' : '#333',
+                  border: processingMethod === 'paypal' ? 'none' : '2px solid #e2e8f0',
+                  borderRadius: '12px',
+                  fontWeight: '600',
+                  cursor: processingMethod ? 'not-allowed' : 'pointer',
+                  transition: 'all 0.2s'
+                }}
+                onMouseEnter={(e) => {
+                  if (!processingMethod) e.currentTarget.style.borderColor = '#667eea';
+                }}
+                onMouseLeave={(e) => {
+                  if (!processingMethod) e.currentTarget.style.borderColor = '#e2e8f0';
+                }}
+                onClick={handlePayPalPayment}
+              >
+                {processingMethod === 'paypal' ? 'Processing...' : 'PayPal'}
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

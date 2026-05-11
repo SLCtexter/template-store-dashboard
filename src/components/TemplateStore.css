@@ -268,6 +268,33 @@
   flex-direction: column;
   gap: 20px;
 }
+/* Payment method toggle buttons */
+.payment-method-toggle {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin: 1rem 0;
+}
+.method-btn {
+  flex: 1;
+  padding: 0.75rem;
+  border: 2px solid #e2e8f0;
+  background: white;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.method-btn.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-color: #667eea;
+}
+.method-btn:hover:not(.active) {
+  border-color: #667eea;
+  transform: translateY(-2px);
+}
+
 .ts-footer {
   text-align: center;
   padding: 20px;
