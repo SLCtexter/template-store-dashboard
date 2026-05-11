@@ -202,13 +202,11 @@ const CheckoutPage = () => {
             </div>
           </div>
 
-          {/* Payment Method Buttons (Direct Payment on Click) */}
           <div style={{ marginTop: '20px' }}>
             <label style={{ fontWeight: 'bold', display: 'block', marginBottom: '12px', fontSize: '16px' }}>
               Pay with
             </label>
             <div style={{ display: 'flex', gap: '16px', justifyContent: 'center' }}>
-              {/* PayHere Button */}
               <button
                 disabled={processingMethod !== null}
                 style={{

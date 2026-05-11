@@ -23,8 +23,8 @@ exports.handler = async (event) => {
           }
         }],
         application_context: {
-          return_url: `${process.env.URL}/paypal-return`,
-          cancel_url: `${process.env.URL}/checkout`
+          return_url: `https://tstdsbrd.netlify.app/paypal-return`,
+          cancel_url: `https://tstdsbrd.netlify.app/checkout`
         }
       })
     });
